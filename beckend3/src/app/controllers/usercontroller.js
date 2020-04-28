@@ -29,19 +29,18 @@ class Usercontroller {
 
   async update(req, res) {
     const schema = Yup.object().shape({
-      name: Yup.string(),
-      email: Yup.string().email,
+      name: Yup.string().min(3),
+      email: Yup.string().email(),
       oldpassword: Yup.string().min(6),
-      password: Yup.string().mid(6)
+      password: Yup.string().min(6)
         .when('oldpassword', (oldpassword, field) => (oldpassword ? field.required() : field)),
-      confirmpassword: yup.string().when('password', (password, field) => {
-        password ? field.require().oneOf([Yup.ref('password')]) : field;
-      }),
 
+      confirmpassword: Yup.string()
+        .when('password', (password, field) => (password ? field.required().oneOf([Yup.ref('password')]) : field)),
     });
 
     if (!(await schema.isValid(req.body))) {
-      return res.status(400).json('Preencimento incorreto');
+      res.status(400).json('Preencimento incorreto');
     }
 
     const { email, oldpassword } = req.body;
