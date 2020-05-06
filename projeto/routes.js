@@ -1,38 +1,28 @@
+import 'react-native-gesture-handler';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {SafeAreaView, StyleSheet, View, Text, StatusBar} from 'react-native';
-import Session from './src/pages/session/App';
+import Registrar from './src/pages/registrar/registrar';
+import Login from './src/pages/login/login';
+import Lista from './src/pages/lista/lista';
+
+const Stack = createStackNavigator();
 
 const App: () => React$Node = () => {
   return (
     <>
-      <Session />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}>
+          <Stack.Screen name="Lista" component={Lista} />
+          <Stack.Screen name="Registrar" component={Registrar} />
+          <Stack.Screen name="Entrar" component={Login} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-
-  title: {
-    flex: 1,
-    justifyContent: 'center',
-
-    alignItems: 'center',
-  },
-  form: {
-    flex: 1,
-    justifyContent: 'center',
-
-    alignItems: 'center',
-  },
-  menu: {
-    flex: 1,
-    justifyContent: 'center',
-
-    alignItems: 'center',
-  },
-});
 
 export default App;
