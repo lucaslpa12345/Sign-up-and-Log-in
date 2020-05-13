@@ -1,50 +1,51 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Background from '../../components/background/index';
 import {Text} from 'react-native';
 import {Container, Lista, Title, Butao} from './estilo';
 import User from '../../components/usuario/usuario';
 import Button from '../../components/button/button';
+import {FlatList} from 'react-native';
+import {users} from '../../api/api';
+import api from '../../api/api';
 
-function ListaUsers({navigation}) {
-  return (
-    <Background>
-      <Container>
-        <Title> Lista de Usuário </Title>
-        <Lista>
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
+class ListaUsers extends React.Component {
+  state = {
+    DATA: [],
+  };
 
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-          <User Nome="Lucas" Email="Lucas@gmail" />
-        </Lista>
-        <Button
-          style={{margin: 20}}
-          texto="Sair"
-          Press={() => navigation.navigate('Entrar')}
-        />
-      </Container>
-    </Background>
-  );
+  us(response) {
+    this.setState({DATA: response.data});
+  }
+
+  async AtualizarLista() {
+    const response = await api.get('/users');
+    return this.setState({
+      DATA: response.data,
+    });
+  }
+  async componentDidMount() {
+    const response = await api.get('/users');
+    return this.us(response);
+  }
+
+  render() {
+    return (
+      <Background>
+        <Container>
+          <Title> Lista de Usuários </Title>
+          <Lista>
+            <User data={this.state.DATA} Press={() => api.delet} />
+          </Lista>
+          <Button texto="Atualizar lista" Press={() => this.AtualizarLista()} />
+          <Button
+            style={{margin: 20}}
+            texto="Sair"
+            Press={() => this.props.navigation.navigate('Entrar')}
+          />
+        </Container>
+      </Background>
+    );
+  }
 }
 
 export default ListaUsers;

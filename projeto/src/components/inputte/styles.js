@@ -15,6 +15,7 @@ align-items: center
 export const TIinput = styled.TextInput.attrs({
   placeholderTextColor: 'rgba(75,0,130,0.4)',
 })`
+height: 100%
   font-size:20px 
   text-decoration: none
   color: rgba(75,0,130,0.4)

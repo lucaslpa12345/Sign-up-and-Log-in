@@ -6,9 +6,7 @@ export const TXinput = styled(Input)`
   margin: 10px 20px;
 `;
 
-export const Container = styled.KeyboardAvoidingView.attrs({
-  behavior: 'padding',
-})` 
+export const Container = styled.KeyboardAvoidingView.attrs({})` 
   flex: 1 
  align-items: center   
 justify-content: center 
@@ -28,4 +26,10 @@ export const ButonChange = styled.TouchableOpacity`
   border: 1px solid rgba(75,0,130,0.9)
  
   
+`;
+
+export const Butoes = styled.View`
+flex-direction: row
+justify-content: center
+align-items: center
 `;

@@ -14,9 +14,7 @@ export const Lista = styled.ScrollView.attrs({
    width: 320px 
    
   
-   border: solid 1px rgba(255,255,255,0.3)
    overflow: hidden 
-   background: rgba(255,255,255,0.3)
 
 `;
 

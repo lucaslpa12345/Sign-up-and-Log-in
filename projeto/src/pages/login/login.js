@@ -1,39 +1,52 @@
-import React, {forwardRef} from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import {Text, View} from 'react-native';
 import Background from '../../components/background/index';
-import {Container, TXinput, Forma, Butao, ButonChange} from './estile';
+import {Container, TXinput, Forma, Butao, ButonChange, Butoes} from './estile';
 import {StatusBar} from 'react-native';
+import api from '../../api/api';
 
 const App = ({navigation}) => {
+  const Passwordref = useRef();
+  function Handlesubmit() {
+    navigation.navigate('Lista');
+  }
+  async function submit() {
+    await api.post('/session', {email, password});
+  }
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <Background>
       <Container>
         <StatusBar barStyle="light-content" backgroundColor="#F7971E" />
-        <Text
-          style={{
-            marginBottom: 230,
-            fontSize: 60,
-            color: 'rgba(75,0,130,0.9)',
-          }}>
-          Entrar
-        </Text>
 
         <Forma>
-          <TXinput icon="email" placeholder="Email" />
-          <TXinput icon="lock" placeholder="Senha" />
+          <TXinput
+            icon="email"
+            placeholder="Email"
+            returnKeyType="next"
+            onSubmitEditing={() => Passwordref.current.focus()}
+            value={email}
+            onChangeText={setEmail}
+          />
+          <TXinput
+            icon="lock"
+            placeholder="Senha"
+            ref={Passwordref}
+            returnKeyType="send"
+            onSubmitEditing={Handlesubmit}
+            value={password}
+            onChangeText={setPassword}
+          />
 
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'center',
-              alignItems: 'center',
-              widht: 100,
-            }}>
-            <Butao Press={() => navigation.navigate('Lista')} texto="Entrar" />
+          <Butoes>
+            <Butao Press={() => submit()} texto="Entrar" />
             <ButonChange onPress={() => navigation.navigate('Registrar')}>
-              <Text>Registrar</Text>
+              <Text style={{color: 'rgba(75,0,130,1)'}}>Registrar</Text>
             </ButonChange>
-          </View>
+          </Butoes>
         </Forma>
       </Container>
     </Background>

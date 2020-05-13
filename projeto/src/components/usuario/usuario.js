@@ -1,13 +1,37 @@
 import React from 'react';
-import {Usuario, Texto} from './estilo';
+import {Usuario, Texto, Delete} from './estilo';
+import Icons from 'react-native-vector-icons/MaterialIcons';
 import propTypes from 'prop-types';
+import {View, FlatList} from 'react-native';
 
-function User({Email, Nome}) {
+function Flat({nome, email}, Press) {
   return (
-    <Usuario>
-      <Texto>Nome:{Nome}</Texto>
-      <Texto>Emailt: {Email}</Texto>
-    </Usuario>
+    <View
+      style={{
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 3,
+        backgroundColor: 'rgba(255,255,255,0.3)',
+      }}>
+      <Usuario>
+        <Texto>Nome:{nome}</Texto>
+        <Texto>Email: {email}</Texto>
+      </Usuario>
+      <Delete onPress={Press}>
+        <Icons name="delete" size={25} color="rgba(75,0,130,1)" />
+      </Delete>
+    </View>
+  );
+}
+
+function User({data}) {
+  return (
+    <FlatList
+      data={data}
+      renderItem={({item}) => <Flat nome={item.name} email={item.emil} />}
+      showsVerticalScrollIndicator={false}
+    />
   );
 }
 
